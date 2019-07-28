@@ -15,7 +15,7 @@ const network = Network.fromJson({
 
 const rpc = new JsonRpc(network.fullhost());
 
-let scatter;
+let scatter, identity, eos, account;
 
 let init = async () => {
     let connected = await ScatterJS.scatter.connect('Autoscale')
@@ -26,18 +26,46 @@ let init = async () => {
     }
     
     scatter = ScatterJS.scatter;
-    let identity = await scatter.getIdentity({accounts:[network]});
-    let eos = scatter.eos(network, Api, {rpc})
+    identity = await scatter.getIdentity({accounts:[network]});
+    eos = scatter.eos(network, Api, {rpc})
+    account = identity.accounts[0]
 
     console.log("--")
     console.log(identity)
 
-    return { scatter, identity, eos }
+    return { scatter, identity, eos, account }
 }
 
 let logout = async() => {
     await scatter.forgetIdentity();
 }
 
-export default { init, logout }
+let transfer = async(amt) => {
+    try {
+        const result = await eos.transact({
+            actions: [{
+                account: 'eosio.token',
+                name: 'transfer',
+                authorization: [{
+                    actor: account.name,
+                    permission: account.authority,
+                }],
+                data: {
+                    from: account.name,
+                    to: 'autoscale.x',
+                    quantity: `${amt} EOS`,
+                    memo: account.name,
+                },
+            }]
+        }, {
+            blocksBehind: 3,
+            expireSeconds: 30,
+        });
+        //completed(result);
+    } catch (e) {
+        //completed(e);
+    }
+}
+
+export default { init, logout, transfer }
 

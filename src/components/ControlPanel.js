@@ -31,9 +31,13 @@ class ControlPanel extends React.Component {
     }
   }
 
-  async logoutScatter() {
-    this.state.connection.scatter.forgetIdentity()
+  logoutScatter() {
+    scatter.forgetIdentity()
     window.location.reload()
+  }
+
+  transferTokens(amt) {
+    scatter.transfer(1)
   }
 
   renderTable(connection) {
@@ -62,7 +66,7 @@ class ControlPanel extends React.Component {
 
             <Input type="number" name="quantity" placeholder="1.5" step="0.1" min="0" max="500" /> 
             &nbsp; 
-            <Button>Deposit</Button>
+            <Button onClick={this.transferTokens}>Deposit</Button>
             <br />
             You can also send EOS tokens to <b>autoscale.x</b>
           </Table.Cell>
