@@ -32,7 +32,7 @@ class ControlPanel extends React.Component {
   }
 
   logoutScatter() {
-    scatter.forgetIdentity()
+    scatter.logout()
     window.location.reload()
   }
 
