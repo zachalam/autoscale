@@ -19,12 +19,12 @@ class App extends React.Component {
   }
 
   closeModal(e) {
-    e.preventDefault()
+    if(e) e.preventDefault()
     this.setState({isOpen: false})
   }
 
   openModal(e) {
-    e.preventDefault()
+    if(e) e.preventDefault()
     this.setState({isOpen: true})
   }
 

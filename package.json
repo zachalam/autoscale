@@ -9,6 +9,7 @@
     "react-scripts": "3.0.1",
     "scatterjs-core": "^2.7.18",
     "scatterjs-plugin-eosjs": "^1.5.1",
+    "scatterjs-plugin-eosjs2": "^1.5.0",
     "semantic-ui-react": "^0.87.3"
   },
   "scripts": {
