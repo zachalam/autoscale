@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Image } from 'semantic-ui-react'
+import { Card, Image, Placeholder } from 'semantic-ui-react'
 import cpu_image from '../images/cpu.png'
 import costs from '../helpers/costs'
 
@@ -8,7 +8,7 @@ class CPU extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            prices: {}
+            prices: false
         }
     }
 
@@ -51,7 +51,14 @@ class CPU extends React.Component {
                             </tbody>
                         </table>
                         :
-                        'Loading..'
+                        <Placeholder>
+                            <Placeholder.Paragraph>
+                                <Placeholder.Line />
+                                <Placeholder.Line />
+                                <Placeholder.Line />
+                                <Placeholder.Line />
+                            </Placeholder.Paragraph>
+                        </Placeholder>
                     }
                 </Card.Content>
             </Card>
