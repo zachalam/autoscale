@@ -1,26 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Button, Grid, Segment } from 'semantic-ui-react'
+import './index.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import CPUCard from './components/CPU'
+import NETCard from './components/NET'
+import RAMCard from './components/RAM'
+
+class App extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+
+  render() {
+
+    return (
+      <div className="App">
+
+        <Segment piled>
+          <h2>
+            Autoscale - Automatic EOS Scaling &nbsp; 
+            <Button className={'bgColor'}>Login</Button>
+          </h2>
+        </Segment>
+
+        <Grid textAlign='center' style={{ height: '80vh' }} verticalAlign='middle'>
+          <Grid container columns={3} stackable>
+            <Grid.Column textAlign='center'>
+              <CPUCard />
+            </Grid.Column>
+            <Grid.Column>
+              <NETCard />
+            </Grid.Column>
+            <Grid.Column>
+              <RAMCard />
+            </Grid.Column>
+          </Grid>
+        </Grid>
+
+        * Deposit EOS and Autoscale will automatically buy account resources when they're needed.
+      </div >
+    );
+  }
 }
 
 export default App;
