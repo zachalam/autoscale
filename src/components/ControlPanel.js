@@ -2,7 +2,6 @@ import React from 'react';
 import { Input, Modal, Loader, Button, Table, Dimmer, Image, Segment, Icon } from 'semantic-ui-react'
 
 import scatter from '../helpers/scatter'
-import { thisExpression } from '@babel/types';
 
 class ControlPanel extends React.Component {
 
@@ -81,7 +80,6 @@ class ControlPanel extends React.Component {
   render() {
     return (
       <Modal size={'tiny'} open={this.props.isOpen} onClose={this.props.closeModal}>
-        <Modal.Header>Autoscale Control Panel</Modal.Header>
         <Modal.Content>
           {this.state.connection ?     
             this.renderTable(this.state.connection)
