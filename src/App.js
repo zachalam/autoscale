@@ -39,7 +39,7 @@ class App extends React.Component {
         />
 
 
-        <Menu stackable>
+        <Menu fixed='top'>
           <Menu.Item name='home' onClick={this.handleItemClick}>
             <a href="https://autoscale.one" style={{color:'black'}}>
             <b>Autoscale</b> &nbsp; | &nbsp; Automatic EOS Scaling
@@ -53,8 +53,9 @@ class App extends React.Component {
         </Menu>
 
 
+        <div className='header_spacer' />
 
-        <Grid textAlign='center' style={{ height: '85vh' }} verticalAlign='middle'>
+        <Grid textAlign='center' style={{ height: '100vh' }}>
           <Grid container columns={3} stackable>
             <Grid.Column textAlign='center'>
               <CPUCard />

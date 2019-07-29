@@ -9,12 +9,6 @@ body {
   text-align:center;
 }
 
-@media only screen and (max-width: 800px) {
-  body {
-    padding:2em;
-  }
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -32,4 +26,17 @@ table { width:100%; text-align:left; }
 
 .bgColor {
   background-color:#6d6daa;
+}
+
+.header_spacer {
+  padding:4em;
+}
+
+
+@media only screen and (max-width: 800px) {
+  body {
+    padding:1.8em;
+  }
+
+  .header_spacer { padding:1.5em; }
 }
