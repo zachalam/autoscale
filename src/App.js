@@ -42,7 +42,7 @@ class App extends React.Component {
         <Menu fixed='top'>
           <Menu.Item name='home' onClick={this.handleItemClick}>
             <a href="https://autoscale.one" style={{color:'black'}}>
-            <b>Autoscale</b> &nbsp; | &nbsp; Automatic EOS Scaling
+            <b>Autoscale</b> <span className="hide_small">&nbsp; | &nbsp; Automatic Scaling</span> for EOS
             </a>
         </Menu.Item>
         <Menu.Menu position='right'>
@@ -52,10 +52,9 @@ class App extends React.Component {
           </Menu.Menu>
         </Menu>
 
+        <div className='header_spacer'>&nbsp;</div>
 
-        <div className='header_spacer' />
-
-        <Grid textAlign='center' style={{ height: '100vh' }}>
+        <Grid textAlign='center'>
           <Grid container columns={3} stackable>
             <Grid.Column textAlign='center'>
               <CPUCard />
@@ -69,6 +68,8 @@ class App extends React.Component {
           </Grid>
         </Grid>
 
+        <br />
+        <div>Deposit EOS directly to <b>autoscale.x</b> or use the <b className="color" style={{cursor:'pointer'}} onClick={this.openModal}>scaling manager</b>.</div>
       </div >
     );
   }

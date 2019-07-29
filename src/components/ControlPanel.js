@@ -1,7 +1,11 @@
 import React from 'react';
 import { Input, Modal, Loader, Button, Table, Dimmer, Image, Segment, Icon } from 'semantic-ui-react'
-
 import scatter from '../helpers/scatter'
+
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
+const createSliderWithTooltip = Slider.createSliderWithTooltip;
+const SliderT = createSliderWithTooltip(Slider);
 
 class ControlPanel extends React.Component {
 
@@ -10,7 +14,10 @@ class ControlPanel extends React.Component {
     this.state = {
       connection: false,
       depositLoading: false,
-      depositAmt: 1.0
+      depositAmt: 1.0,
+      cpuReserve: 500,
+      netReserve: 500,
+      ramReserve: 1
     }
     this.openWallet = this.openWallet.bind(this)
     this.logoutScatter = this.logoutScatter.bind(this)
@@ -63,10 +70,10 @@ class ControlPanel extends React.Component {
       
       <Table.Body>
         <Table.Row>
-          <Table.Cell>Account</Table.Cell>
+          <Table.Cell width={4}>User Account</Table.Cell>
           <Table.Cell>
             <h2>
-            {account.name} &nbsp; 
+            <span className="color">{account.name}</span> &nbsp; 
             <Icon name="sign-out" style={{cursor:'pointer'}} onClick={this.logoutScatter} />
             </h2>
           </Table.Cell>
@@ -78,13 +85,31 @@ class ControlPanel extends React.Component {
         <Table.Row>
           <Table.Cell>Deposit EOS</Table.Cell>
           <Table.Cell>
-
-
             <Input type="number" name="quantity" onChange={this.setDepositAmt} value={this.state.depositAmt} step="0.1" min="0" max="500" /> 
             &nbsp; 
             <Button onClick={this.transferTokens} loading={this.state.depositLoading}>Deposit</Button>
-            <br />
+            <div className="spacer" />
             You can also send EOS tokens to <b>autoscale.x</b>
+          </Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>PRO Tier Tools <br />* coming soon.</Table.Cell>
+          <Table.Cell>
+            With PRO tier you can change how much CPU, NET, & RAM will 
+            always be available to your account.
+            <div className="spacer" />
+            <Segment>
+              <div className={'padder'}>
+              CPU: {this.state.cpuReserve} ms
+              <SliderT min={0} max={5000} value={this.state.cpuReserve} />
+              <br />
+              NET: {this.state.netReserve} kb
+              <Slider min={0} max={5000} value={this.state.netReserve} />
+              <br />     
+              RAM: {this.state.ramReserve} kb
+              <Slider min={0} max={10} value={this.state.ramReserve} />
+              </div>
+            </Segment>      
           </Table.Cell>
         </Table.Row>
       </Table.Body>
@@ -104,7 +129,7 @@ class ControlPanel extends React.Component {
             <div>
               <Segment basic>
                 <Dimmer active inverted>
-                  <Loader inverted>Connecting...</Loader>
+                  <Loader inverted>Connecting to Scatter...</Loader>
                 </Dimmer>
                 <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
               </Segment>

@@ -17,7 +17,7 @@ code {
 table { width:100%; text-align:left; }
 
 .padder {
-  padding:2em;
+  padding:1em;
 }
 
 .color {
@@ -29,9 +29,12 @@ table { width:100%; text-align:left; }
 }
 
 .header_spacer {
-  padding:4em;
+  padding:3em;
 }
 
+.spacer {
+  padding:0.1em;
+}
 
 @media only screen and (max-width: 800px) {
   body {
@@ -39,4 +42,6 @@ table { width:100%; text-align:left; }
   }
 
   .header_spacer { padding:1.5em; }
+
+  .hide_small { display:none; }
 }
