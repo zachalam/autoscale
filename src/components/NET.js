@@ -34,7 +34,7 @@ class NET extends React.Component {
                             <tbody>
                                 <tr>
                                     <td>30-day Cost:</td>
-                                    <td><h3>{costs.round(this.state.prices.pp_net_rent, 6)} EOS</h3></td>
+                                    <td><h3 className='color'>{costs.round(this.state.prices.pp_net_rent, 6)} EOS</h3></td>
                                 </tr>
                                 <tr>
                                     <td></td>

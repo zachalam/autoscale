@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, Segment } from 'semantic-ui-react'
+import { Button, Grid, Menu, Icon } from 'semantic-ui-react'
 import './index.css'
 
 import ControlPanel from './components/ControlPanel'
@@ -19,13 +19,13 @@ class App extends React.Component {
   }
 
   closeModal(e) {
-    if(e) e.preventDefault()
-    this.setState({isOpen: false})
+    if (e) e.preventDefault()
+    this.setState({ isOpen: false })
   }
 
   openModal(e) {
-    if(e) e.preventDefault()
-    this.setState({isOpen: true})
+    if (e) e.preventDefault()
+    this.setState({ isOpen: true })
   }
 
   render() {
@@ -38,14 +38,23 @@ class App extends React.Component {
           closeModal={this.closeModal}
         />
 
-        <Segment piled>
-          <h2>
-            Autoscale - Automatic EOS Scaling &nbsp; 
-            <Button className={'bgColor'} onClick={this.openModal}>Control Panel</Button>
-          </h2>
-        </Segment>
 
-        <Grid textAlign='center' style={{ height: '80vh' }} verticalAlign='middle'>
+        <Menu stackable>
+          <Menu.Item name='home' onClick={this.handleItemClick}>
+            <a href="https://autoscale.one" style={{color:'black'}}>
+            <b>Autoscale</b> &nbsp; | &nbsp; Automatic EOS Scaling
+            </a>
+        </Menu.Item>
+        <Menu.Menu position='right'>
+            <Menu.Item style={{fontWeight:'bold'}} name='manager' onClick={this.openModal}>
+              <span className='color'><Icon name='cog' /> Scaling Manager</span>
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
+
+
+
+        <Grid textAlign='center' style={{ height: '85vh' }} verticalAlign='middle'>
           <Grid container columns={3} stackable>
             <Grid.Column textAlign='center'>
               <CPUCard />
@@ -59,7 +68,6 @@ class App extends React.Component {
           </Grid>
         </Grid>
 
-        * Deposit EOS and Autoscale will automatically buy account resources when they're needed.
       </div >
     );
   }

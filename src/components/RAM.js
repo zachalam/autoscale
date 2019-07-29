@@ -34,7 +34,7 @@ class RAM extends React.Component {
                             <tbody>
                                 <tr>
                                     <td>Exchange:</td>
-                                    <td><h3>1kb = {costs.round(this.state.prices.pp_kb, 4)} EOS</h3></td>
+                                    <td><h3 className='color'>1kb = {costs.round(this.state.prices.pp_kb, 4)} EOS</h3></td>
                                 </tr>
                                 <tr>
                                     <td></td>
