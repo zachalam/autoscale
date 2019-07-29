@@ -8,10 +8,15 @@ class ControlPanel extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      connection: false
+      connection: false,
+      depositLoading: false,
+      depositAmt: 1.0
     }
     this.openWallet = this.openWallet.bind(this)
     this.logoutScatter = this.logoutScatter.bind(this)
+    this.transferTokens = this.transferTokens.bind(this)
+    this.setDepositAmt = this.setDepositAmt.bind(this)
+    this.depositCompleted = this.depositCompleted.bind(this)
   }
 
   async componentDidUpdate() {
@@ -26,7 +31,7 @@ class ControlPanel extends React.Component {
     console.log(connection)
     
     if (!this.state.connection) {
-      this.setState({ connection })
+      this.setState({ ...this.state, connection })
     }
   }
 
@@ -35,8 +40,20 @@ class ControlPanel extends React.Component {
     window.location.reload()
   }
 
-  transferTokens(amt) {
-    scatter.transfer(1)
+  transferTokens() {
+    this.setState({depositLoading: true})   // turns on loader
+    // invokes scatter, 2nd param called to stop loader on button.
+    scatter.transfer(this.state.depositAmt, this.depositCompleted) 
+  }
+
+  setDepositAmt(e) {
+    let depositAmt = e.target.value   // grab textinput val
+    this.setState({...this.state, depositAmt})    // save to state.
+  }
+
+  depositCompleted() {
+    // stops loading
+    this.setState({...this.state, depositLoading: false})
   }
 
   renderTable(connection) {
@@ -50,7 +67,7 @@ class ControlPanel extends React.Component {
           <Table.Cell>
             <h2>
             {account.name} &nbsp; 
-            <Icon name="sign-out" onClick={this.logoutScatter} />
+            <Icon name="sign-out" style={{cursor:'pointer'}} onClick={this.logoutScatter} />
             </h2>
           </Table.Cell>
         </Table.Row>
@@ -63,9 +80,9 @@ class ControlPanel extends React.Component {
           <Table.Cell>
 
 
-            <Input type="number" name="quantity" placeholder="1.5" step="0.1" min="0" max="500" /> 
+            <Input type="number" name="quantity" onChange={this.setDepositAmt} value={this.state.depositAmt} step="0.1" min="0" max="500" /> 
             &nbsp; 
-            <Button onClick={this.transferTokens}>Deposit</Button>
+            <Button onClick={this.transferTokens} loading={this.state.depositLoading}>Deposit</Button>
             <br />
             You can also send EOS tokens to <b>autoscale.x</b>
           </Table.Cell>

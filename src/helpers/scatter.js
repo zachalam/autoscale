@@ -40,7 +40,7 @@ let logout = async() => {
     await scatter.forgetIdentity();
 }
 
-let transfer = async(amt) => {
+let transfer = async(amt,completed) => {
     try {
         const result = await eos.transact({
             actions: [{
@@ -61,9 +61,9 @@ let transfer = async(amt) => {
             blocksBehind: 3,
             expireSeconds: 30,
         });
-        //completed(result);
+        completed();
     } catch (e) {
-        //completed(e);
+        completed();
     }
 }
 
