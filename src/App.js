@@ -47,7 +47,7 @@ class App extends React.Component {
         </Menu.Item>
         <Menu.Menu position='right'>
             <Menu.Item style={{fontWeight:'bold'}} name='manager' onClick={this.openModal}>
-              <span className='color'><Icon name='cog' /> Scaling Manager</span>
+              <span className='color'><Icon name='rocket' /> Scaling Manager</span>
             </Menu.Item>
           </Menu.Menu>
         </Menu>

@@ -17,7 +17,8 @@ class ControlPanel extends React.Component {
       depositAmt: 1.0,
       cpuReserve: 500,
       netReserve: 500,
-      ramReserve: 1
+      ramReserve: 500,
+      autoscale_balance: 0
     }
     this.openWallet = this.openWallet.bind(this)
     this.logoutScatter = this.logoutScatter.bind(this)
@@ -74,40 +75,45 @@ class ControlPanel extends React.Component {
           <Table.Cell>
             <h2>
             <span className="color">{account.name}</span> &nbsp; 
+            <a href={`https://bloks.io/account/${account.name}`} target="_blank"><Icon name="globe"></Icon></a>
             <Icon name="sign-out" style={{cursor:'pointer'}} onClick={this.logoutScatter} />
             </h2>
           </Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>Autoscale Balance</Table.Cell>
-          <Table.Cell><h3>0.00 EOS</h3></Table.Cell>
+          <Table.Cell>
+            <h3>0.0000 EOS</h3>
+            <i>Low balance; account not protected.</i>
+          </Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>Deposit EOS</Table.Cell>
           <Table.Cell>
             <Input type="number" name="quantity" onChange={this.setDepositAmt} value={this.state.depositAmt} step="0.1" min="0" max="500" /> 
             &nbsp; 
-            <Button onClick={this.transferTokens} loading={this.state.depositLoading}>Deposit</Button>
+            <Button disabled={true} onClick={this.transferTokens} loading={this.state.depositLoading}>Deposit</Button>
             <div className="spacer" />
-            You can also send EOS tokens to <b>autoscale.x</b>
+            Token deposit <b>disabled</b>, currently in closed beta.
+            {/*You can also send EOS tokens to <b>autoscale.x</b>*/}
           </Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>PRO Tier Tools <br />* coming soon.</Table.Cell>
           <Table.Cell>
-            With PRO tier you can change how much CPU, NET, & RAM will 
+            With PRO tier you can set the minimum CPU, NET, & RAM that will 
             always be available to your account.
             <div className="spacer" />
             <Segment>
               <div className={'padder'}>
-              CPU: {this.state.cpuReserve} ms
-              <SliderT min={0} max={5000} value={this.state.cpuReserve} />
-              <br />
-              NET: {this.state.netReserve} kb
-              <Slider min={0} max={5000} value={this.state.netReserve} />
-              <br />     
-              RAM: {this.state.ramReserve} kb
-              <Slider min={0} max={10} value={this.state.ramReserve} />
+                <Icon name='globe' color='gray' /> RAM: <b>{this.state.ramReserve}</b> bytes
+                <Slider min={0} max={5000} value={this.state.ramReserve} />
+                <br />
+                <Icon name='cog' /> CPU: <b>{this.state.cpuReserve}</b> milliseconds
+                <SliderT min={0} max={5000} value={this.state.cpuReserve} />
+                <br />
+                <Icon name='plug' /> NET: <b>{this.state.netReserve}</b> kilobytes
+                <Slider min={0} max={5000} value={this.state.netReserve} />
               </div>
             </Segment>      
           </Table.Cell>

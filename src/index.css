@@ -41,7 +41,7 @@ table { width:100%; text-align:left; }
     padding:1.8em;
   }
 
-  .header_spacer { padding:1.5em; }
+  .header_spacer { padding:1.25em; }
 
   .hide_small { display:none; }
 }
