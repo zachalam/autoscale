@@ -33,10 +33,7 @@ class App extends React.Component {
     return (
       <div className="App">
 
-        <ControlPanel
-          isOpen={this.state.isOpen}
-          closeModal={this.closeModal}
-        />
+        { this.state.isOpen ? <ControlPanel closeModal={this.closeModal} /> : null }
 
 
         <Menu fixed='top'>

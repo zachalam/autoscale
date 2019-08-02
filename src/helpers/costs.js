@@ -76,10 +76,8 @@ let round = (num,places=4) => {
 }
 
 let autoscaleBalance = async (account_name) => {
-    //let encoded_name = new BigNumber(Eos.modules.format.encodeName(account_name, false))
     let balance = await gettablerows('deposits','autoscale.x',account_name)
-    console.log("balance object")
-    console.log(balance)
+    return balance
 }
 
 let objectHash = {

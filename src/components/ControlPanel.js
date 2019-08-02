@@ -23,16 +23,16 @@ class ControlPanel extends React.Component {
       autoscale_balance: 0
     }
     this.openWallet = this.openWallet.bind(this)
+    this.getBalance = this.getBalance.bind(this)
     this.logoutScatter = this.logoutScatter.bind(this)
     this.transferTokens = this.transferTokens.bind(this)
     this.setDepositAmt = this.setDepositAmt.bind(this)
     this.depositCompleted = this.depositCompleted.bind(this)
   }
 
-  async componentDidUpdate() {
-    if (this.props.isOpen) {
+  async componentDidMount() {
       await this.openWallet()
-    }
+      await this.getBalance()
   }
 
   async openWallet() {
@@ -44,10 +44,17 @@ class ControlPanel extends React.Component {
       // save conn variable
       this.setState({ ...this.state, connection })
     }
+  }
 
+  async getBalance() {
     // load user autoscale balance
-    await costs.autoscaleBalance('winter')
-
+    let resp = await costs.autoscaleBalance(this.state.connection.account.name)
+    console.log(resp)
+    if(resp.rows.length) {
+      // user has a balance
+      let autoscale_balance = resp.rows[0].balance / 10000
+      this.setState({...this.state,autoscale_balance})
+    }
   }
 
   logoutScatter() {
@@ -69,10 +76,12 @@ class ControlPanel extends React.Component {
   depositCompleted() {
     // stops loading
     this.setState({...this.state, depositLoading: false})
+    // get new balance
+    this.getBalance()
   }
 
   renderTable(connection) {
-    let account = connection.identity.accounts[0]
+    let {account} = connection
     return (
       <Table basic='very'>
       
@@ -90,7 +99,7 @@ class ControlPanel extends React.Component {
         <Table.Row>
           <Table.Cell>Autoscale Balance</Table.Cell>
           <Table.Cell>
-            <h3>0.0000 EOS</h3>
+            <h3>{costs.round(this.state.autoscale_balance,4)} EOS</h3>
             <i>Low balance; account not protected.</i>
           </Table.Cell>
         </Table.Row>
@@ -133,7 +142,7 @@ class ControlPanel extends React.Component {
 
   render() {
     return (
-      <Modal size={'tiny'} open={this.props.isOpen} onClose={this.props.closeModal}>
+      <Modal size={'tiny'} open={true} onClose={this.props.closeModal}>
         <Modal.Content>
           {this.state.connection ?     
             this.renderTable(this.state.connection)
