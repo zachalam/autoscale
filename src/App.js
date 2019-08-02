@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Grid, Menu, Icon } from 'semantic-ui-react'
 import './index.css'
 
-import ControlPanel from './components/ControlPanel'
+import ControlPanel from './components/ControlPanel/ControlPanel'
 import CPUCard from './components/CPU'
 import NETCard from './components/NET'
 import RAMCard from './components/RAM'

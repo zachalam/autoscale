@@ -1,8 +1,10 @@
 import React from 'react';
 import { Input, Modal, Loader, Button, Table, Dimmer, Image, Segment, Icon } from 'semantic-ui-react'
-import scatter from '../helpers/scatter'
+import scatter from '../../helpers/scatter'
 
-import costs from '../helpers/costs'
+import costs from '../../helpers/costs'
+
+import Balance from './Balance'
 
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -23,7 +25,6 @@ class ControlPanel extends React.Component {
       autoscale_balance: 0
     }
     this.openWallet = this.openWallet.bind(this)
-    this.getBalance = this.getBalance.bind(this)
     this.logoutScatter = this.logoutScatter.bind(this)
     this.transferTokens = this.transferTokens.bind(this)
     this.setDepositAmt = this.setDepositAmt.bind(this)
@@ -32,7 +33,6 @@ class ControlPanel extends React.Component {
 
   async componentDidMount() {
       await this.openWallet()
-      await this.getBalance()
   }
 
   async openWallet() {
@@ -43,17 +43,6 @@ class ControlPanel extends React.Component {
     if (!this.state.connection) {
       // save conn variable
       this.setState({ ...this.state, connection })
-    }
-  }
-
-  async getBalance() {
-    // load user autoscale balance
-    let resp = await costs.autoscaleBalance(this.state.connection.account.name)
-    console.log(resp)
-    if(resp.rows.length) {
-      // user has a balance
-      let autoscale_balance = resp.rows[0].balance / 10000
-      this.setState({...this.state,autoscale_balance})
     }
   }
 
@@ -99,8 +88,7 @@ class ControlPanel extends React.Component {
         <Table.Row>
           <Table.Cell>Autoscale Balance</Table.Cell>
           <Table.Cell>
-            <h3>{costs.round(this.state.autoscale_balance,4)} EOS</h3>
-            <i>Low balance; account not protected.</i>
+            <Balance account={account.name} />
           </Table.Cell>
         </Table.Row>
         <Table.Row>
