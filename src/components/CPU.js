@@ -46,7 +46,7 @@ class CPU extends React.Component {
                                 </tr>
                                 <tr>
                                     <td>Stake Basis:</td>
-                                    <td>1ms / {costs.round(this.state.prices.pp_cpu, 4)} EOS</td>
+                                    <td>1ms for {costs.round(this.state.prices.pp_cpu, 4)} EOS</td>
                                 </tr>
                             </tbody>
                         </table>

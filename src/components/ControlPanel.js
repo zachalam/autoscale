@@ -2,6 +2,8 @@ import React from 'react';
 import { Input, Modal, Loader, Button, Table, Dimmer, Image, Segment, Icon } from 'semantic-ui-react'
 import scatter from '../helpers/scatter'
 
+import costs from '../helpers/costs'
+
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
@@ -15,9 +17,9 @@ class ControlPanel extends React.Component {
       connection: false,
       depositLoading: false,
       depositAmt: 1.0,
-      cpuReserve: 500,
-      netReserve: 500,
-      ramReserve: 500,
+      cpuReserve: 1000,
+      netReserve: 1000,
+      ramReserve: 1000,
       autoscale_balance: 0
     }
     this.openWallet = this.openWallet.bind(this)
@@ -39,8 +41,13 @@ class ControlPanel extends React.Component {
     console.log(connection)
     
     if (!this.state.connection) {
+      // save conn variable
       this.setState({ ...this.state, connection })
     }
+
+    // load user autoscale balance
+    await costs.autoscaleBalance('winter')
+
   }
 
   logoutScatter() {
@@ -101,19 +108,18 @@ class ControlPanel extends React.Component {
         <Table.Row>
           <Table.Cell>PRO Tier Tools <br />* coming soon.</Table.Cell>
           <Table.Cell>
-            With PRO tier you can set the minimum CPU, NET, & RAM that will 
-            always be available to your account.
+            With PRO tier you can adjust the minimum CPU, NET, & RAM that is available to your account.
             <div className="spacer" />
             <Segment>
               <div className={'padder'}>
-                <Icon name='globe' color='gray' /> RAM: <b>{this.state.ramReserve}</b> bytes
-                <Slider min={0} max={5000} value={this.state.ramReserve} />
+                <Icon name='globe' color='grey' /> RAM: <b>{this.state.ramReserve}</b> bytes
+                <Slider min={0} max={10000} value={this.state.ramReserve} />
                 <br />
-                <Icon name='cog' /> CPU: <b>{this.state.cpuReserve}</b> milliseconds
-                <SliderT min={0} max={5000} value={this.state.cpuReserve} />
+                <Icon name='cog' color='grey' /> CPU: <b>{this.state.cpuReserve}</b> milliseconds
+                <SliderT min={0} max={10000} value={this.state.cpuReserve} />
                 <br />
-                <Icon name='plug' /> NET: <b>{this.state.netReserve}</b> kilobytes
-                <Slider min={0} max={5000} value={this.state.netReserve} />
+                <Icon name='plug' color='grey' /> NET: <b>{this.state.netReserve}</b> kilobytes
+                <Slider min={0} max={10000} value={this.state.netReserve} />
               </div>
             </Segment>      
           </Table.Cell>

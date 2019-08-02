@@ -1,12 +1,13 @@
 const { JsonRpc } = require('eosjs');
 const rpc = new JsonRpc('https://nodes.get-scatter.com', { fetch });
 
-let gettablerows = async (table) => {
+let gettablerows = async (table,code='eosio',lower_bound='') => {
     const resp = await rpc.get_table_rows({
         json: true,              // Get the response as json
-        code: 'eosio',     // Contract that we target
-        scope: 'eosio',         // Account that owns the data
-        table: table,        // Table name
+        code,     // Contract that we target
+        scope: code,         // Account that owns the data
+        table,        // Table name
+        lower_bound,        // account name is held here
         limit: 1               // Maximum number of rows that we want to get
     });
 
@@ -74,11 +75,19 @@ let round = (num,places=4) => {
     return num.toFixed(places)
 }
 
+let autoscaleBalance = async (account_name) => {
+    //let encoded_name = new BigNumber(Eos.modules.format.encodeName(account_name, false))
+    let balance = await gettablerows('deposits','autoscale.x',account_name)
+    console.log("balance object")
+    console.log(balance)
+}
+
 let objectHash = {
     cpu,
     net,
     ram,
-    round
+    round,
+    autoscaleBalance
 }
 
 export default objectHash;

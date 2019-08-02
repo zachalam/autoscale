@@ -46,7 +46,7 @@ class NET extends React.Component {
                                 </tr>
                                 <tr>
                                     <td>Stake Basis:</td>
-                                    <td>1kb / {costs.round(this.state.prices.pp_net, 4)} EOS</td>
+                                    <td>1kb for {costs.round(this.state.prices.pp_net, 4)} EOS</td>
                                 </tr>
                             </tbody>
                         </table>
