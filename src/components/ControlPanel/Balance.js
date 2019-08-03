@@ -58,7 +58,7 @@ class ControlPanel extends React.Component {
                     'Account not protected, please deposit tokens.' :
                     this.state.autoscale_balance < .10 ?
                         'Low Balance, account may be unstable.' :
-                        'Account balance in good standing.'} </i>
+                        'Your account is currently protected.'} </i>
             </div>
         );
     }
