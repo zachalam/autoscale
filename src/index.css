@@ -9,12 +9,13 @@ body {
   text-align:center;
 }
 
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-table { width:100%; text-align:left; }
+table { width:100%; text-align:left; color:#777; }
 
 .padder {
   padding:1em;

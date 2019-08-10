@@ -1,15 +1,12 @@
 import React from 'react';
-import { Input, Modal, Loader, Button, Table, Dimmer, Image, Segment, Icon } from 'semantic-ui-react'
+import { Dropdown, Input, Modal, Loader, Button, Table, Dimmer, Image, Segment, Icon } from 'semantic-ui-react'
 import scatter from '../../helpers/scatter'
 
 import costs from '../../helpers/costs'
 
 import Balance from './Balance'
+import Priority from './Priority';
 
-import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
-const createSliderWithTooltip = Slider.createSliderWithTooltip;
-const SliderT = createSliderWithTooltip(Slider);
 
 class ControlPanel extends React.Component {
 
@@ -98,27 +95,15 @@ class ControlPanel extends React.Component {
             &nbsp; 
             <Button disabled={true} onClick={this.transferTokens} loading={this.state.depositLoading}>Deposit</Button>
             <div className="spacer" />
-            Token deposit <b>disabled</b>, currently in closed beta.
-            {/*You can also send EOS tokens to <b>autoscale.x</b>*/}
+            You can also send EOS tokens to <b>autoscale.x</b>
           </Table.Cell>
         </Table.Row>
         <Table.Row>
-          <Table.Cell>PRO Tier Tools <br />* coming soon.</Table.Cell>
+          <Table.Cell>Resource Settings <br /></Table.Cell>
           <Table.Cell>
-            With PRO tier you can adjust the minimum CPU, NET, & RAM that is available to your account.
-            <div className="spacer" />
-            <Segment>
-              <div className={'padder'}>
-                <Icon name='globe' color='grey' /> RAM: <b>{this.state.ramReserve}</b> bytes
-                <Slider min={0} max={10000} value={this.state.ramReserve} />
-                <br />
-                <Icon name='cog' color='grey' /> CPU: <b>{this.state.cpuReserve}</b> milliseconds
-                <SliderT min={0} max={10000} value={this.state.cpuReserve} />
-                <br />
-                <Icon name='plug' color='grey' /> NET: <b>{this.state.netReserve}</b> kilobytes
-                <Slider min={0} max={10000} value={this.state.netReserve} />
-              </div>
-            </Segment>      
+
+            <Priority />
+                 
           </Table.Cell>
         </Table.Row>
       </Table.Body>

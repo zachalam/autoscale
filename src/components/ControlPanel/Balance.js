@@ -54,11 +54,11 @@ class ControlPanel extends React.Component {
         return (
             <div>
                 <h3>{costs.round(this.state.autoscale_balance, 4)} EOS</h3>
-                <i>{this.state.autoscale_balance === 0 ?
+                {this.state.autoscale_balance === 0 ?
                     'Account not protected, please deposit tokens.' :
                     this.state.autoscale_balance < .10 ?
                         'Low Balance, account may be unstable.' :
-                        'Your account is currently protected.'} </i>
+                        'Your account is protected.'}
             </div>
         );
     }
