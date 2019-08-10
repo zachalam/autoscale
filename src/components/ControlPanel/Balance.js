@@ -1,5 +1,5 @@
 import React from 'react';
-import { Placeholder } from 'semantic-ui-react'
+import { Icon, Placeholder } from 'semantic-ui-react'
 
 import costs from '../../helpers/costs'
 
@@ -53,12 +53,12 @@ class ControlPanel extends React.Component {
         // load balance
         return (
             <div>
-                <h3>{costs.round(this.state.autoscale_balance, 4)} EOS</h3>
+                <h3>{this.state.autoscale_balance.toFixed(4)} EOS</h3>
                 {this.state.autoscale_balance === 0 ?
-                    'Account not protected, please deposit tokens.' :
+                    <span>Deposit EOS to enable Autoscale. <Icon name="shield" color='red' /></span> :
                     this.state.autoscale_balance < .10 ?
-                        'Low Balance, account may be unstable.' :
-                        'Your account is protected.'}
+                    <span>Low balance, refill to avoid interruption. <Icon name="warning sign" color='orange' /></span> :
+                        <span>Your account is protected. <Icon name="check" color='green' /></span>}
             </div>
         );
     }
