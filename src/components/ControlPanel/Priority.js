@@ -30,7 +30,7 @@ class Priority extends React.Component {
                     <Table.Row>
                     <Table.Cell>
                             <h4><Icon name='plus circle' />CPU/NET +RAM</h4>
-                            Autoscale monitors all resources. RAM usage depleted balance faster.
+                            Autoscale monitors all resources. RAM use depletes balance faster.
                         </Table.Cell> 
                         <Table.Cell><Button basic onClick={this.switchPriority}>Switch</Button></Table.Cell>
                     </Table.Row>

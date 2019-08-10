@@ -27,7 +27,7 @@ let init = async () => {
     
     scatter = ScatterJS.scatter;
     identity = await scatter.getIdentity({accounts:[network]});
-    eos = scatter.eos(network, Api, {rpc})
+    eos = scatter.eos(network, Api, {rpc, beta3: true})
     account = identity.accounts[0]
 
     console.log("--")
@@ -40,9 +40,9 @@ let logout = async() => {
     await scatter.forgetIdentity();
 }
 
-let transfer = async(amt,completed) => {
+let transfer = async(amt,completed,cancelled) => {
     try {
-        await eos.transact({
+        let resp = await eos.transact({
             actions: [{
                 account: 'eosio.token',
                 name: 'transfer',
@@ -53,7 +53,7 @@ let transfer = async(amt,completed) => {
                 data: {
                     from: account.name,
                     to: 'autoscale.x',
-                    quantity: `${amt} EOS`,
+                    quantity: `${parseFloat(amt).toFixed(4)} EOS`,
                     memo: account.name,
                 },
             }]
@@ -61,9 +61,12 @@ let transfer = async(amt,completed) => {
             blocksBehind: 3,
             expireSeconds: 30,
         });
+        console.log(resp)
         completed();
     } catch (e) {
-        completed();
+        // do nothing..
+        if(e) console.log(e)
+        cancelled();
     }
 }
 

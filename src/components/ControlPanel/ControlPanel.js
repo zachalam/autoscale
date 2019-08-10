@@ -14,24 +14,26 @@ class ControlPanel extends React.Component {
       connection: false,
       depositLoading: false,
       depositAmt: 1.0,
-      autoscale_balance: 0
+      autoscale_balance: 0,
+      showBalance: true // render balance component
     }
     this.openWallet = this.openWallet.bind(this)
     this.logoutScatter = this.logoutScatter.bind(this)
     this.transferTokens = this.transferTokens.bind(this)
     this.setDepositAmt = this.setDepositAmt.bind(this)
     this.depositCompleted = this.depositCompleted.bind(this)
+    this.depositCanceled = this.depositCanceled.bind(this)
   }
 
   async componentDidMount() {
-      await this.openWallet()
+    await this.openWallet()
   }
 
   async openWallet() {
     let connection = await scatter.init()
     console.log("connected")
     console.log(connection)
-    
+
     if (!this.state.connection) {
       // save conn variable
       this.setState({ ...this.state, connection })
@@ -44,67 +46,74 @@ class ControlPanel extends React.Component {
   }
 
   transferTokens() {
-    this.setState({depositLoading: true})   // turns on loader
+    this.setState({ depositLoading: true })   // turns on loader
     // invokes scatter, 2nd param called to stop loader on button.
-    scatter.transfer(this.state.depositAmt, this.depositCompleted) 
+    scatter.transfer(this.state.depositAmt, this.depositCompleted, this.depositCanceled)
   }
 
   setDepositAmt(e) {
     let depositAmt = e.target.value   // grab textinput val
-    this.setState({...this.state, depositAmt})    // save to state.
+    this.setState({ ...this.state, depositAmt })    // save to state.
   }
 
   depositCompleted() {
     // stops loading
-    this.setState({...this.state, depositLoading: false})
-    // get new balance
-    this.getBalance()
+    this.setState({ ...this.state, depositLoading: false })
+    // refresh balance
+    setTimeout(() => { 
+      this.setState({ ...this.state, showBalance: false },() => {
+        this.setState({...this.state, showBalance: true})
+    }) }, 800)
+  }
+
+  depositCanceled() {
+    this.setState({ ...this.state, depositLoading: false })
   }
 
   renderTable(connection) {
-    let {account} = connection
+    let { account } = connection
     return (
       <Table basic='very'>
-      
-      <Table.Body>
-        <Table.Row>
-          <Table.Cell width={4}>User Account</Table.Cell>
-          <Table.Cell>
-            <h2>
-            <span className="color">{account.name}</span> &nbsp; 
+
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell width={4}>User Account</Table.Cell>
+            <Table.Cell>
+              <h2>
+                <span className="color">{account.name}</span> &nbsp;
             <a href={`https://bloks.io/account/${account.name}`} target="_blank" rel="noopener noreferrer"><Icon name="globe"></Icon></a>
-            <Icon name="sign-out" style={{cursor:'pointer'}} onClick={this.logoutScatter} />
-            </h2>
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Autoscale Balance</Table.Cell>
-          <Table.Cell>
-            <Balance account={account.name} />
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Deposit EOS</Table.Cell>
-          <Table.Cell>
-            <Input type="number" name="quantity" onChange={this.setDepositAmt} value={this.state.depositAmt} step="0.1" min="0" max="500" /> 
-            &nbsp; 
-            <Button disabled={true} onClick={this.transferTokens} loading={this.state.depositLoading}>Deposit</Button>
-            <div className="spacer" />
-            You can also send EOS tokens to <b>autoscale.x</b>
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Resource Settings <br /></Table.Cell>
-          <Table.Cell>
+                <Icon name="sign-out" style={{ cursor: 'pointer' }} onClick={this.logoutScatter} />
+              </h2>
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>Autoscale Balance</Table.Cell>
+            <Table.Cell>
+              {this.state.showBalance? <Balance account={account.name} /> : null }
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>Deposit EOS</Table.Cell>
+            <Table.Cell>
+              <Input style={{width:'100px'}} type="number" name="quantity" onChange={this.setDepositAmt} value={this.state.depositAmt} min="0" max="500" />
+              &nbsp;
+            <Button onClick={this.transferTokens} loading={this.state.depositLoading}>Deposit</Button>
+              <div className="spacer" />
+              You can also send EOS tokens to <b>autoscale.x</b>
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>Resource Settings <br /></Table.Cell>
+            <Table.Cell>
 
-            <Priority />
-                 
-          </Table.Cell>
-        </Table.Row>
-      </Table.Body>
-  
+              <Priority />
 
-    </Table>
+            </Table.Cell>
+          </Table.Row>
+        </Table.Body>
+
+
+      </Table>
     )
   }
 
@@ -112,9 +121,9 @@ class ControlPanel extends React.Component {
     return (
       <Modal size={'tiny'} open={true} onClose={this.props.closeModal}>
         <Modal.Content>
-          {this.state.connection ?     
+          {this.state.connection ?
             this.renderTable(this.state.connection)
-          :
+            :
             <div>
               <Segment basic>
                 <Dimmer active inverted>
