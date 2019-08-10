@@ -1,7 +1,7 @@
 // Importing Scatter and eosjs.
 import ScatterJS, { Network } from 'scatterjs-core';
 import ScatterEOS from 'scatterjs-plugin-eosjs2';
-import { Api, JsonRpc, RpcError, JsSignatureProvider } from 'eosjs';
+import { Api, JsonRpc } from 'eosjs';
 // Scatter comes without plugins, so we need to add the eosjs plugin.
 ScatterJS.plugins(new ScatterEOS())
 
@@ -42,7 +42,7 @@ let logout = async() => {
 
 let transfer = async(amt,completed) => {
     try {
-        const result = await eos.transact({
+        await eos.transact({
             actions: [{
                 account: 'eosio.token',
                 name: 'transfer',

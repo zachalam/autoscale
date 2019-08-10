@@ -1,8 +1,6 @@
 import React from 'react';
-import { Dropdown, Input, Modal, Loader, Button, Table, Dimmer, Image, Segment, Icon } from 'semantic-ui-react'
+import { Input, Modal, Loader, Button, Table, Dimmer, Image, Segment, Icon } from 'semantic-ui-react'
 import scatter from '../../helpers/scatter'
-
-import costs from '../../helpers/costs'
 
 import Balance from './Balance'
 import Priority from './Priority';
@@ -16,9 +14,6 @@ class ControlPanel extends React.Component {
       connection: false,
       depositLoading: false,
       depositAmt: 1.0,
-      cpuReserve: 1000,
-      netReserve: 1000,
-      ramReserve: 1000,
       autoscale_balance: 0
     }
     this.openWallet = this.openWallet.bind(this)
@@ -77,7 +72,7 @@ class ControlPanel extends React.Component {
           <Table.Cell>
             <h2>
             <span className="color">{account.name}</span> &nbsp; 
-            <a href={`https://bloks.io/account/${account.name}`} target="_blank"><Icon name="globe"></Icon></a>
+            <a href={`https://bloks.io/account/${account.name}`} target="_blank" rel="noopener noreferrer"><Icon name="globe"></Icon></a>
             <Icon name="sign-out" style={{cursor:'pointer'}} onClick={this.logoutScatter} />
             </h2>
           </Table.Cell>
@@ -127,7 +122,7 @@ class ControlPanel extends React.Component {
                 </Dimmer>
                 <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
               </Segment>
-              <a href="#" onClick={this.openWallet}>Retry wallet</a>
+              <Button onClick={this.openWallet}>Retry wallet</Button>
             </div>
 
           }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, Menu, Icon } from 'semantic-ui-react'
+import { Grid, Menu, Icon } from 'semantic-ui-react'
 import './index.css'
 
 import ControlPanel from './components/ControlPanel/ControlPanel'
