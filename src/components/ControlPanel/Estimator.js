@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Table, Icon } from 'semantic-ui-react'
-import costs from '../../helpers/costs'
+import { Table, Icon } from 'semantic-ui-react'
 
 
 class Estimator extends React.Component {
@@ -15,7 +14,8 @@ class Estimator extends React.Component {
 
     render() {
         let { payment } = this.props
-        if(!payment || payment > 100) payment = 1
+        if(!payment) payment = 1            // show 1 eos estimate if no input
+        if(payment > 100) payment = 100     // estimate up to 100 eos
 
         let {cpu_prices, net_prices, ram_prices} = window
         let days_cpu = cpu_prices ? parseInt((payment / cpu_prices.pp_cpu_rent) * 30) : 0
