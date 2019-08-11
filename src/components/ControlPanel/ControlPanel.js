@@ -15,6 +15,7 @@ class ControlPanel extends React.Component {
       connection: false,
       depositLoading: false,
       depositAmt: 0.5,
+      depositError: '',
       autoscale_balance: 0,
       showBalance: true // render balance component
     }
@@ -68,8 +69,10 @@ class ControlPanel extends React.Component {
     }, 800)
   }
 
-  depositCanceled() {
-    this.setState({ ...this.state, depositLoading: false })
+  depositCanceled(e) {
+    this.setState({ ...this.state, depositLoading: false, depositError: e })
+    // remove deposit error after 5 seconds
+    setTimeout(() => {this.setState({...this.state, depositError: ''})}, 5000)
   }
 
   renderTable(connection) {
@@ -102,11 +105,13 @@ class ControlPanel extends React.Component {
   renderTabs() {
 
     let depositEOS = <Tab.Pane>
-      <Input style={{ width: '100px' }} type="number" name="quantity" onChange={this.setDepositAmt} value={this.state.depositAmt} min="0" max="500" />
+      {this.state.depositError ? <Segment inverted color='red'>{this.state.depositError}</Segment> : null }
+      <Input style={{ width: '100px' }} type="number" name="quantity" onChange={this.setDepositAmt} value={this.state.depositAmt} step="0.1" min="0" max="99.9" />
       &nbsp;
     <Button onClick={this.transferTokens} loading={this.state.depositLoading}>Deposit</Button>
       <div className="spacer" />
-      You can also send EOS tokens to <b>autoscale.x</b>
+      Initial deposit must be at least 0.25 EOS. <br />
+      You can also fund your account by sending EOS to <b>autoscale.x</b>
       <Estimator payment={this.state.depositAmt} />
     </Tab.Pane>
 

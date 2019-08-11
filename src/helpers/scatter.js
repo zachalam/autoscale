@@ -66,7 +66,7 @@ let transfer = async(amt,completed,cancelled) => {
     } catch (e) {
         // do nothing..
         if(e) console.log(e)
-        cancelled();
+        cancelled(e.toString());
     }
 }
 

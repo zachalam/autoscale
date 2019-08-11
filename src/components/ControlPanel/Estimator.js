@@ -18,12 +18,13 @@ class Estimator extends React.Component {
         if(!payment || payment > 100) payment = 1
 
         let {cpu_prices, net_prices, ram_prices} = window
-        let days_cpu = parseInt((payment / cpu_prices.pp_cpu_rent) * 30)
-        let days_net = parseInt((payment / net_prices.pp_net_rent) * 30)
-        let days_ram = parseInt((payment / (ram_prices.pp_byte * 1000)) * 30)
+        let days_cpu = cpu_prices ? parseInt((payment / cpu_prices.pp_cpu_rent) * 30) : 0
+        let days_net = net_prices ? parseInt((payment / net_prices.pp_net_rent) * 30) : 0
+        let days_ram = ram_prices ? parseInt((payment / (ram_prices.pp_byte * 1000)) * 30) : 0
 
         return (
             <div>
+            <div className="spacer" />
             <Table basic='very' compact='very'>
                 <Table.Body>
                     <Table.Row>
@@ -35,7 +36,7 @@ class Estimator extends React.Component {
                 </Table.Body>
             </Table>
             <div className="spacer" />
-            Calculation based on <i>current market prices</i>. Assumption of 1000ms CPU daily or 1000kb NET daily or 1000bytes RAM monthly.
+            *Based on <i>current market prices</i>. Assumption of 1000ms CPU daily, 1000kb NET daily, or 1000bytes RAM monthly.
             </div>
         );
     }
