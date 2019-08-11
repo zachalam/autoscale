@@ -14,6 +14,7 @@ class CPU extends React.Component {
 
     async componentDidMount() {
         let prices = await costs.cpu()
+        window.cpu_prices = prices
         this.setState({ prices })
     }
 

@@ -14,6 +14,7 @@ class RAM extends React.Component {
 
     async componentDidMount() {
         let prices = await costs.ram()
+        window.ram_prices = prices
         this.setState({ prices })
     }
 

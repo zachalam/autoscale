@@ -14,6 +14,7 @@ class NET extends React.Component {
 
     async componentDidMount() {
         let prices = await costs.net()
+        window.net_prices = prices
         this.setState({ prices })
     }
 

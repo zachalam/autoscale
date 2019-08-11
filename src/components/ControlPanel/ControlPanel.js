@@ -1,9 +1,10 @@
 import React from 'react';
-import { Input, Modal, Loader, Button, Table, Dimmer, Image, Segment, Icon } from 'semantic-ui-react'
+import { Tab, Input, Modal, Loader, Button, Table, Dimmer, Image, Segment, Icon } from 'semantic-ui-react'
 import scatter from '../../helpers/scatter'
 
 import Balance from './Balance'
 import Priority from './Priority';
+import Estimator from './Estimator';
 
 
 class ControlPanel extends React.Component {
@@ -13,7 +14,7 @@ class ControlPanel extends React.Component {
     this.state = {
       connection: false,
       depositLoading: false,
-      depositAmt: 1.0,
+      depositAmt: 0.5,
       autoscale_balance: 0,
       showBalance: true // render balance component
     }
@@ -60,10 +61,11 @@ class ControlPanel extends React.Component {
     // stops loading
     this.setState({ ...this.state, depositLoading: false })
     // refresh balance
-    setTimeout(() => { 
-      this.setState({ ...this.state, showBalance: false },() => {
-        this.setState({...this.state, showBalance: true})
-    }) }, 800)
+    setTimeout(() => {
+      this.setState({ ...this.state, showBalance: false }, () => {
+        this.setState({ ...this.state, showBalance: true })
+      })
+    }, 800)
   }
 
   depositCanceled() {
@@ -89,32 +91,38 @@ class ControlPanel extends React.Component {
           <Table.Row>
             <Table.Cell>Autoscale Balance</Table.Cell>
             <Table.Cell>
-              {this.state.showBalance? <Balance account={account.name} /> : null }
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Deposit EOS</Table.Cell>
-            <Table.Cell>
-              <Input style={{width:'100px'}} type="number" name="quantity" onChange={this.setDepositAmt} value={this.state.depositAmt} min="0" max="500" />
-              &nbsp;
-            <Button onClick={this.transferTokens} loading={this.state.depositLoading}>Deposit</Button>
-              <div className="spacer" />
-              You can also send EOS tokens to <b>autoscale.x</b>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Resource Settings <br /></Table.Cell>
-            <Table.Cell>
-
-              <Priority />
-
+              {this.state.showBalance ? <Balance account={account.name} /> : null}
             </Table.Cell>
           </Table.Row>
         </Table.Body>
-
-
       </Table>
     )
+  }
+
+  renderTabs() {
+
+    let depositEOS = <Tab.Pane>
+      <Input style={{ width: '100px' }} type="number" name="quantity" onChange={this.setDepositAmt} value={this.state.depositAmt} min="0" max="500" />
+      &nbsp;
+    <Button onClick={this.transferTokens} loading={this.state.depositLoading}>Deposit</Button>
+      <div className="spacer" />
+      You can also send EOS tokens to <b>autoscale.x</b>
+      <Estimator payment={this.state.depositAmt} />
+      <div className="spacer" />
+      Calculation based on current market prices. Assumption of 1000ms CPU daily or 1000kb NET daily or 1000bytes RAM monthly.
+    </Tab.Pane>
+
+    let resourceSettings = <Tab.Pane>
+      <Priority />
+    </Tab.Pane>
+
+    const panes = [
+      { menuItem: 'Deposit EOS', render: () => depositEOS },
+      { menuItem: 'Resource Settings', render: () => resourceSettings }
+    ]
+
+    return <Tab panes={panes} />
+
   }
 
   render() {
@@ -122,7 +130,12 @@ class ControlPanel extends React.Component {
       <Modal size={'tiny'} open={true} onClose={this.props.closeModal}>
         <Modal.Content>
           {this.state.connection ?
-            this.renderTable(this.state.connection)
+            <div>
+              {this.renderTable(this.state.connection)}
+              <div className="spacer" />
+              {this.renderTabs()}
+            </div>
+
             :
             <div>
               <Segment basic>
