@@ -108,8 +108,6 @@ class ControlPanel extends React.Component {
       <div className="spacer" />
       You can also send EOS tokens to <b>autoscale.x</b>
       <Estimator payment={this.state.depositAmt} />
-      <div className="spacer" />
-      Calculation based on current market prices. Assumption of 1000ms CPU daily or 1000kb NET daily or 1000bytes RAM monthly.
     </Tab.Pane>
 
     let resourceSettings = <Tab.Pane>

@@ -15,7 +15,7 @@ class Estimator extends React.Component {
 
     render() {
         let { payment } = this.props
-        if(!payment || payment > 500) payment = 1
+        if(!payment || payment > 100) payment = 1
 
         let {cpu_prices, net_prices, ram_prices} = window
         let days_cpu = parseInt((payment / cpu_prices.pp_cpu_rent) * 30)
@@ -23,6 +23,7 @@ class Estimator extends React.Component {
         let days_ram = parseInt((payment / (ram_prices.pp_byte * 1000)) * 30)
 
         return (
+            <div>
             <Table basic='very' compact='very'>
                 <Table.Body>
                     <Table.Row>
@@ -33,6 +34,9 @@ class Estimator extends React.Component {
                     </Table.Row>
                 </Table.Body>
             </Table>
+            <div className="spacer" />
+            Calculation based on <i>current market prices</i>. Assumption of 1000ms CPU daily or 1000kb NET daily or 1000bytes RAM monthly.
+            </div>
         );
     }
 }
