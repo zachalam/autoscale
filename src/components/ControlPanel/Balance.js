@@ -55,10 +55,10 @@ class ControlPanel extends React.Component {
             <div>
                 <h3>{this.state.autoscale_balance.toFixed(4)} EOS</h3>
                 {this.state.autoscale_balance === 0 ?
-                    <span>Deposit EOS to enable Autoscale. <Icon name="shield" color='red' /></span> :
+                    <span>Autoscale off, Deposit EOS to enable. <Icon name="shield" color='red' /></span> :
                     this.state.autoscale_balance < .10 ?
                     <span>Low balance, refill to avoid interruption. <Icon name="warning sign" color='orange' /></span> :
-                        <span>Your account is protected. <Icon name="check" color='green' /></span>}
+                        <span>Autoscale will monitor your account. <Icon name="check" color='green' /></span>}
             </div>
         );
     }

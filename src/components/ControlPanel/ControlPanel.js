@@ -121,7 +121,7 @@ class ControlPanel extends React.Component {
 
     const panes = [
       { menuItem: 'Deposit EOS', render: () => depositEOS },
-      { menuItem: 'Resource Settings', render: () => resourceSettings }
+      { menuItem: 'Settings', render: () => resourceSettings }
     ]
 
     return <Tab panes={panes} />
