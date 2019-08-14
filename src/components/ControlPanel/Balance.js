@@ -27,7 +27,9 @@ class ControlPanel extends React.Component {
 
             let resp = await costs.autoscaleBalance(this.props.account)
             let autoscale_balance = 0
-            if (resp.rows.length) {
+
+            // if a row was returned, and that row = the logged in account, update balance.
+            if (resp.rows.length && (resp.rows[0].account === this.props.account)) {
                 // user has a balance
                 autoscale_balance = resp.rows[0].balance / 10000
             }
