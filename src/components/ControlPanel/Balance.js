@@ -1,7 +1,6 @@
 import React from 'react';
 import { Icon, Placeholder } from 'semantic-ui-react'
-
-import costs from '../../helpers/costs'
+import scatter from '../../helpers/scatter'
 
 
 class ControlPanel extends React.Component {
@@ -25,14 +24,11 @@ class ControlPanel extends React.Component {
             // set loader.
             this.setState({ ...this.state, balance_loading: true })
 
-            let resp = await costs.autoscaleBalance(this.props.account)
+            let resp = await scatter.autoscale(this.props.account)
             let autoscale_balance = 0
 
-            // if a row was returned, and that row = the logged in account, update balance.
-            if (resp.rows.length && (resp.rows[0].account === this.props.account)) {
-                // user has a balance
-                autoscale_balance = resp.rows[0].balance / 10000
-            }
+            // does user have balance?
+            if (resp) { autoscale_balance = resp.balance / 10000 }
 
             // turn off loader and set balance.
             this.setState({ ...this.state, autoscale_balance, balance_loading: false })

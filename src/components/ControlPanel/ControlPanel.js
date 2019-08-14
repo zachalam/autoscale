@@ -116,7 +116,7 @@ class ControlPanel extends React.Component {
     </Tab.Pane>
 
     let resourceSettings = <Tab.Pane>
-      <Priority />
+      <Priority account={this.state.connection.account.name} />
     </Tab.Pane>
 
     const panes = [
