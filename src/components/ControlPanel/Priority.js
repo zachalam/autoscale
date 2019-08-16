@@ -10,7 +10,7 @@ class Priority extends React.Component {
         this.state = {
             priorityError: '',
             loading: false,
-            clickButtonLoading: false,
+            clickButtonLoading: false,      // beomes an int when loading (to identify button)
             priority: null,       // default no priority
             priorityAfterUpdate: null
         }
@@ -45,6 +45,8 @@ class Priority extends React.Component {
         let priority = e.target.value
         // save priority we selected (to apply after completion)
         this.setState({ priorityAfterUpdate: priority, clickButtonLoading: parseInt(priority) })
+        // stop loading after 5 seconds
+        setTimeout(() => {this.setState({...this.state, clickButtonLoading: false})}, 5000)
         scatter.prioritize(priority, this.priorityCompleted, this.priorityCanceled)
     }
 

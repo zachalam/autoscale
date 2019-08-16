@@ -2,7 +2,6 @@ import React from 'react';
 import { Icon, Placeholder } from 'semantic-ui-react'
 import scatter from '../../helpers/scatter'
 
-
 class ControlPanel extends React.Component {
 
     constructor(props) {

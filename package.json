@@ -9,6 +9,7 @@
     "rc-slider": "^8.6.13",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-dom-confetti": "^0.1.1",
     "react-scripts": "3.0.1",
     "scatterjs-core": "^2.7.18",
     "scatterjs-plugin-eosjs2": "^1.5.0",

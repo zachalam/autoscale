@@ -49,6 +49,7 @@ class App extends React.Component {
           </Menu.Menu>
         </Menu>
 
+
         <div className='header_spacer'>&nbsp;</div>
 
         <Grid textAlign='center'>

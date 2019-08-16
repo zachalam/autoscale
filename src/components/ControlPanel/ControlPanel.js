@@ -5,7 +5,7 @@ import scatter from '../../helpers/scatter'
 import Balance from './Balance'
 import Priority from './Priority';
 import Estimator from './Estimator';
-
+import Confetti from 'react-dom-confetti';
 
 class ControlPanel extends React.Component {
 
@@ -14,10 +14,11 @@ class ControlPanel extends React.Component {
     this.state = {
       connection: false,
       depositLoading: false,
-      depositAmt: 0.5,
+      depositAmt: 0.2500,
       depositError: '',
       autoscale_balance: 0,
-      showBalance: true // render balance component
+      showBalance: true, // render balance component
+      launchConfetti: false // confetti cannon
     }
     this.openWallet = this.openWallet.bind(this)
     this.logoutScatter = this.logoutScatter.bind(this)
@@ -29,6 +30,13 @@ class ControlPanel extends React.Component {
 
   async componentDidMount() {
     await this.openWallet()
+  }
+
+  launchConfetti() {
+    // launch confetti.
+    setTimeout(() => { this.setState({...this.state, launchConfetti: true}) }, 200)
+    // reset and reload confetti
+    setTimeout(() => { this.setState({...this.state, launchConfetti: false}) }, 400)
   }
 
   async openWallet() {
@@ -49,6 +57,8 @@ class ControlPanel extends React.Component {
 
   transferTokens() {
     this.setState({ depositLoading: true })   // turns on loader
+    // stop loading after 5 seconds
+    setTimeout(() => {this.setState({...this.state, depositLoading: false})}, 5000)
     // invokes scatter, 2nd param called to stop loader on button.
     scatter.transfer(this.state.depositAmt, this.depositCompleted, this.depositCanceled)
   }
@@ -65,6 +75,8 @@ class ControlPanel extends React.Component {
     setTimeout(() => {
       this.setState({ ...this.state, showBalance: false }, () => {
         this.setState({ ...this.state, showBalance: true })
+        // launch confetti cannon
+        this.launchConfetti()
       })
     }, 800)
   }
@@ -106,10 +118,10 @@ class ControlPanel extends React.Component {
 
     let depositEOS = <Tab.Pane>
       {this.state.depositError ? <Segment inverted color='red'>{this.state.depositError}</Segment> : null }
-      <Input style={{ width: '100px' }} type="number" name="quantity" onChange={this.setDepositAmt} value={this.state.depositAmt} step="0.1" min="0" max="99.9" />
+      <Input style={{ width: '100px' }} type="number" name="quantity" onChange={this.setDepositAmt} value={this.state.depositAmt} step="0.0100" min="0" max="10.0000" />
       &nbsp;
     <Button onClick={this.transferTokens} loading={this.state.depositLoading}>Deposit</Button>
-      <div className="spacer" />
+      <div className="spacer"></div>
       Initial deposit must be at least 0.25 EOS. <br />
       You can also fund your account by sending EOS to <b>autoscale.x</b>
       <Estimator payment={this.state.depositAmt} />
@@ -130,13 +142,17 @@ class ControlPanel extends React.Component {
 
   render() {
     return (
-      <Modal size={'tiny'} open={true} onClose={this.props.closeModal}>
+      <Modal size={'tiny'} open={true} onClose={this.props.closeModal}>   
         <Modal.Content>
           {this.state.connection ?
             <div>
               {this.renderTable(this.state.connection)}
               <div className="spacer" />
               {this.renderTabs()}
+              <div className={'center_me'}>
+                {/* confetti cannon */}
+              <Confetti active={this.state.launchConfetti} />
+              </div>
             </div>
 
             :
