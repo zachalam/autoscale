@@ -1,11 +1,12 @@
 // Importing Scatter and eosjs.
 import ScatterJS, { Network } from 'scatterjs-core';
 import ScatterEOS from 'scatterjs-plugin-eosjs2';
+import ScatterLynx from 'scatterjs-plugin-lynx'
 import { Api, JsonRpc } from 'eosjs';
 import costs from './costs';
 
 // Scatter comes without plugins, so we need to add the eosjs plugin.
-ScatterJS.plugins(new ScatterEOS())
+ScatterJS.plugins(new ScatterEOS(), new ScatterLynx({Api, JsonRpc}))
 
 const network = Network.fromJson({
     blockchain: 'eos',
@@ -38,10 +39,12 @@ let tx = async (account_contract, account_method, data, completed, cancelled) =>
         //console.log(resp)
         completed();
     } catch (e) {
-        // do nothing..
+        // do nothing..'      
+        console.log(e)
         let x = e
         if (x.message) x = x.message     // message provided. 
         cancelled(x.toString());
+
     }
 }
 

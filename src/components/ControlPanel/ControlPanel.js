@@ -143,7 +143,7 @@ class ControlPanel extends React.Component {
             <div>
               <Segment basic>
                 <Dimmer active inverted>
-                  <Loader inverted>Connecting to Scatter...</Loader>
+                  <Loader inverted>Connecting...</Loader>
                 </Dimmer>
                 <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
               </Segment>
