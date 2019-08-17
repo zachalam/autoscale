@@ -151,7 +151,7 @@ class ControlPanel extends React.Component {
               {this.renderTabs()}
               <div className={'center_me'}>
                 {/* confetti cannon */}
-              <Confetti active={this.state.launchConfetti} />
+              <Confetti active={this.state.launchConfetti} config={{colors: ['#6D6DAA','#C7E9FF']}} />
               </div>
             </div>
 

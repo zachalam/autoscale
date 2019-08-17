@@ -31,7 +31,7 @@ table { width:100%; text-align:left; color:#777; }
 }
 
 .header_spacer {
-  padding:2.5em;
+  padding:2.2em;
 }
 
 .spacer {
@@ -49,7 +49,7 @@ table { width:100%; text-align:left; color:#777; }
     padding:1.8em;
   }
 
-  .header_spacer { padding:1.25em; }
+  .header_spacer { padding:1.1em; }
 
   .hide_small { display:none; }
 }
