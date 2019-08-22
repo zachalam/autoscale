@@ -122,7 +122,7 @@ class ControlPanel extends React.Component {
       &nbsp;
     <Button onClick={this.transferTokens} loading={this.state.depositLoading}>Deposit</Button>
       <div className="spacer"></div>
-      Initial deposit must be at least 0.25 EOS. <br />
+      Initial deposit must be at least 0.10 EOS. <br />
       You can also fund your account by sending EOS to <b>autoscale.x</b>
       <Estimator payment={this.state.depositAmt} />
     </Tab.Pane>
